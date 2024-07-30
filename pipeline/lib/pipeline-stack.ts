@@ -149,8 +149,7 @@ export class PipelineStack extends Stack {
             
                // define command in this phases
                "npm install -g aws-cdk",
-              //  "npm install -g typescript",
-              //  "npm install -g ts-node",
+              "npm install -g ts-node",
                 "cd infrastructure",
                "npm install",
                "echo 'Listing files and directories in infrastructure folder:'",
@@ -160,7 +159,7 @@ export class PipelineStack extends Stack {
            },
            build: {
              commands: [
-              `cdk deploy --context env=${envName} --require-approval ${envName === "prod" ? "true" : "never"}`, 
+              `cdk deploy --context env=${envName}`, 
              ],
            },
          },
