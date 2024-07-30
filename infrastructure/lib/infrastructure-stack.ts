@@ -16,7 +16,7 @@ export class InfrastructureStack extends Stack {
 
 
     const nodejsFunction = new NodejsFunction(this, "NodeJsFunction", {
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_20_X,
       entry: 'lib/lambdas/nodeLambdaFunction.ts',
       handler: 'handler',
       memorySize:128,
