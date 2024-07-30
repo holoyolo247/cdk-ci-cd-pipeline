@@ -152,6 +152,7 @@ export class PipelineStack extends Stack {
                "npm install -g aws-cdk",
                 "cd infrastructure",
                "npm install",
+              // "npm install --save-dev @types/node@17.0.41", // Install a compatible version of @types/node
              ],
            },
 
