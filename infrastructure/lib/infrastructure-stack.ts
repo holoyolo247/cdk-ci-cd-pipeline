@@ -22,13 +22,13 @@ export class InfrastructureStack extends Stack {
       memorySize:128,
     });
 
-    const apigateway = new LambdaRestApi(this, 'LambdaRestApi', {
-      handler: nodejsFunction,
-      proxy: false,
-      restApiName: `${DEPLOY_ENVIROMENT} Rest API`
-    });
+    // const apigateway = new LambdaRestApi(this, 'LambdaRestApi', {
+    //   handler: nodejsFunction,
+    //   proxy: false,
+    //   restApiName: `${DEPLOY_ENVIROMENT} Rest API`
+    // });
 
-    // hook lambda dunction to the actual method 
-    const sayHello = apigateway.root.addResource('say-hello')
-    sayHello.addMethod('GET', new LambdaIntegration(nodejsFunction))
+    // // hook lambda dunction to the actual method 
+    // const sayHello = apigateway.root.addResource('say-hello')
+    // sayHello.addMethod('GET', new LambdaIntegration(nodejsFunction))
 }}

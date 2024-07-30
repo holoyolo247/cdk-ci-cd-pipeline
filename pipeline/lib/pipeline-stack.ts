@@ -146,18 +146,18 @@ export class PipelineStack extends Stack {
                nodejs: "20.x",
              },
              commands: [
-              "echo 'Listing files and directories in infrastructure folder:'",
-              "ls -al", // List all files and directories in the current directory
+            
                // define command in this phases
                "npm install -g aws-cdk",
+              //  "npm install -g typescript",
+              //  "npm install -g ts-node",
                 "cd infrastructure",
                "npm install",
+               "echo 'Listing files and directories in infrastructure folder:'",
+               "ls -al", // List all files and directories in the current directory
               // "npm install --save-dev @types/node@17.0.41", // Install a compatible version of @types/node
              ],
            },
-
-          
-         
            build: {
              commands: [
               `cdk deploy --context env=${envName} --require-approval ${envName === "prod" ? "true" : "never"}`, 
