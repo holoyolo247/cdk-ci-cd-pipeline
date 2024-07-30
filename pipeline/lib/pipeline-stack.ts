@@ -112,7 +112,7 @@ export class PipelineStack extends Stack {
            },
          },
          artifacts: {
-          // "base-directory": "infrastructure",
+          "base-directory": "infrastructure",
            files: "**/*",
          },
          cache: {
@@ -146,12 +146,21 @@ export class PipelineStack extends Stack {
                nodejs: "20.x",
              },
              commands: [
+              "echo 'Listing files and directories in infrastructure folder:'",
+              "ls -al", // List all files and directories in the current directory
                // define command in this phases
                "npm install -g aws-cdk",
                //  "cd infrastructure",
                "npm install",
              ],
            },
+
+          //  pre_build:{
+          //   commands:[
+          //     "npm install --save-dev ts-node@10.9.1"
+          //   ]
+          //  },
+         
            build: {
              commands: [
               `cdk deploy --context env=${envName} --require-approval ${envName === "prod" ? "true" : "never"}`, 
