@@ -112,7 +112,7 @@ export class PipelineStack extends Stack {
            },
          },
          artifacts: {
-           "base-directory": "infrastructure",
+          // "base-directory": "infrastructure",
            files: "**/*",
          },
          cache: {
@@ -154,7 +154,7 @@ export class PipelineStack extends Stack {
            },
            build: {
              commands: [
-               `if [ "$DEPLOY_ENVIRONMENT" = "prod" ]; then cdk deploy --context env=$DEPLOY_ENVIRONMENT --require-approval true; else cdk deploy --context env=$DEPLOY_ENVIRONMENT --require-approval never; fi`,
+              `cdk deploy --context env=${envName} --require-approval ${envName === "prod" ? "true" : "never"}`, 
              ],
            },
          },
