@@ -112,14 +112,14 @@ export class PipelineStack extends Stack {
            },
          },
          artifacts: {
-          "base-directory": "infrastructure",
+        //  "base-directory": "infrastructure",
            files: "**/*",
          },
-         cache: {
-           paths: ["node_modules/**/*"],
-         },
+        //  cache: {
+        //    paths: ["node_modules/**/*"],
+        //  },
        }),
-       cache: Cache.local(LocalCacheMode.CUSTOM),
+    //   cache: Cache.local(LocalCacheMode.CUSTOM),
      }
    );
 
@@ -150,16 +150,12 @@ export class PipelineStack extends Stack {
               "ls -al", // List all files and directories in the current directory
                // define command in this phases
                "npm install -g aws-cdk",
-               //  "cd infrastructure",
+                "cd infrastructure",
                "npm install",
              ],
            },
 
-          //  pre_build:{
-          //   commands:[
-          //     "npm install --save-dev ts-node@10.9.1"
-          //   ]
-          //  },
+          
          
            build: {
              commands: [
