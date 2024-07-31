@@ -10,6 +10,9 @@ import { Artifact, Pipeline } from "aws-cdk-lib/aws-codepipeline";
 import {
  CodeBuildAction,
  GitHubSourceAction,
+
+ ManualApprovalAction,
+
 } from "aws-cdk-lib/aws-codepipeline-actions";
 import {
  CompositePrincipal,
@@ -19,6 +22,7 @@ import {
  ServicePrincipal,
 } from "aws-cdk-lib/aws-iam";
 import { Bucket } from "aws-cdk-lib/aws-s3";
+
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -133,7 +137,9 @@ export class PipelineStack extends Stack {
          buildImage: LinuxBuildImage.AMAZON_LINUX_2_5,
        },
        environmentVariables: {
-         DEPLOY_ENVIRONMENT: {
+
+        DEPLOY_ENVIROMENT: {
+
            value: envName, // this allow the dev key or the prod key to pass in this porject, and then use it later for cdk deploy resource and deploy to the correct enviroment
          },
        },
@@ -159,7 +165,9 @@ export class PipelineStack extends Stack {
            },
            build: {
              commands: [
-              `cdk deploy --context env=${envName}`, 
+
+             `cdk deploy --context env=${envName}`, 
+
              ],
            },
          },
@@ -204,6 +212,39 @@ export class PipelineStack extends Stack {
    });
 
 
+  
+   if(envName ==="prod"){
+      pipeline.addStage({
+        stageName: "ManualApproval",
+        actions: [
+          new ManualApprovalAction({
+            actionName: "ApproveDeployment",
+            additionalInformation: "Approve to continue the deployment",
+            role: infrastructureDeplpyRole,
+            externalEntityLink: "https://example.com/approve-link",
+          }),
+        ],
+      });
+   }
+   
+  
+   
+  pipeline.addStage({
+    stageName: "Deploy",
+    actions: [
+      new CodeBuildAction({
+        actionName: "DeployCdkInfrastructure",
+        project: infrastructureDeployProject,
+        input: infrastructureBuildOutput,
+        role: infrastructureDeplpyRole,
+      }),
+    ],
+    
+  });
+
+
+ 
+
    pipeline.addStage({
      stageName: "Deploy",
      actions: [
@@ -215,6 +256,7 @@ export class PipelineStack extends Stack {
        }),
      ],
    });
+
  }
 }
 
